@@ -23,6 +23,6 @@ jobs:
     - uses: ./
       with:
         milliseconds: 1000
-    - uses: spring-catponents/actions-jscpdrs@v1
+    - uses: spring-catponents/action-jscpdrs
       with:
         milliseconds: 1000
