@@ -5,7 +5,7 @@ const exec = require('@actions/exec')
 // most @actions toolkit packages have async methods
 async function run() {
   try {
-    exec.exec('npx jscpdrs-cli')
+    exec.exec('npx @ruaaa/jscpdrs-cli')
     const ms = core.getInput('milliseconds');
     core.info(`Waiting ${ms} milliseconds ...`);
 
