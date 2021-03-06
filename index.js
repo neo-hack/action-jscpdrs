@@ -1,19 +1,32 @@
 const core = require('@actions/core');
-const wait = require('./wait');
 const exec = require('@actions/exec')
+const github = require('@actions/github')
+const fs = require('fs')
+const path = require('path')
 
-// most @actions toolkit packages have async methods
+const token = core.getInput('repotoken')
+const octokit = github.getOctokit(token);
+
 async function run() {
   try {
-    exec.exec('npx @ruaaa/jscpdrs-cli')
-    const ms = core.getInput('milliseconds');
-    core.info(`Waiting ${ms} milliseconds ...`);
-
-    core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-    await wait(parseInt(ms));
-    core.info((new Date()).toTimeString());
-
-    core.setOutput('time', new Date().toTimeString());
+    // jscpd detect
+    const p = path.resolve('./jscpdrs-cli')
+    await exec.exec(`${p} --output ${path.resolve('./', 'results.json')}`, [], {
+      listeners: {
+        stderr: (data) => {
+          core.warning(data.toString('utf-8'))
+        }
+      }
+    })
+    let content = fs.readFileSync(`${path.resolve('./', 'results.json')}`).toString('utf8')
+    // create issue
+    content = '```json\n' + content + '\n```' 
+    const context = github.context;
+    await octokit.issues.create({
+      ...context.repo,
+      title: 'Found copied',
+      body: `${content}`
+    });
   } catch (error) {
     core.setFailed(error.message);
   }
