@@ -8,11 +8,14 @@ require('./sourcemap-register.js');module.exports =
 const core = __nccwpck_require__(186);
 const wait = __nccwpck_require__(258);
 const exec = __nccwpck_require__(514)
+const path = __nccwpck_require__(622);
 
 // most @actions toolkit packages have async methods
 async function run() {
   try {
-    exec.exec('npx jscpdrs-cli')
+    // exec.exec('npx jscpdrs-cli')
+    const p = __nccwpck_require__.ab + "jscpdrs-cli"
+    exec(__nccwpck_require__.ab + "jscpdrs-cli")
     const ms = core.getInput('milliseconds');
     core.info(`Waiting ${ms} milliseconds ...`);
 
