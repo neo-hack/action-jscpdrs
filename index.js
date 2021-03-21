@@ -19,13 +19,24 @@ async function run() {
       }
     })
     let content = fs.readFileSync(`${path.resolve('./', 'results.json')}`).toString('utf8')
+    const renderItem = (item) => {
+      return [
+        `[item.duplication_a.source_id](${item.duplication_a.source_id})`,
+        '```ts\n' + item.duplication_a.fragement + '\n```',
+        `[item.duplication_a.source_id](${item.duplication_b.source_id})`,
+        '```ts\n' + item.duplication_b.fragement + '\n```'
+      ].join('\n')
+    }
     // create issue
-    content = '```json\n' + content + '\n```' 
+    content = JSON.parse(content)
+    detected = content.map(item => {
+      return renderItem(item)
+    }).join('\n')
     const context = github.context;
     await octokit.issues.create({
       ...context.repo,
       title: 'Found copied',
-      body: `${content}`
+      body: `${detected}`
     });
   } catch (error) {
     core.setFailed(error.message);
