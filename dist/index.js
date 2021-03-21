@@ -28,9 +28,9 @@ async function run() {
     let content = fs.readFileSync(`${path.resolve('./', 'results.json')}`).toString('utf8')
     const renderItem = (item) => {
       return [
-        `[item.duplication_a.source_id](${item.duplication_a.source_id})`,
+        `[${item.duplication_a.source_id}](${item.duplication_a.source_id})`,
         '```ts\n' + item.duplication_a.fragement + '\n```',
-        `[item.duplication_a.source_id](${item.duplication_b.source_id})`,
+        `[${item.duplication_a.source_id}](${item.duplication_b.source_id})`,
         '```ts\n' + item.duplication_b.fragement + '\n```'
       ].join('\n')
     }
