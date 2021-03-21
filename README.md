@@ -4,7 +4,7 @@
 ## usage
 
 ```yaml
-name: "units-test"
+name: "cpd"
 on: [push]
 
 jobs:
@@ -17,6 +17,8 @@ jobs:
       with:
         repotoken: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+it will create issue contain `copy/paste` code.
 
 ## develop
 
