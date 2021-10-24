@@ -1,4 +1,4 @@
-# spring-catponents/action-jscpdrs
+# action-jscpdrs
 > a action to detect copy/paste
 
 ## usage
